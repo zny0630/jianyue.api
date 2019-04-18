@@ -27,18 +27,18 @@ public class UserController {
     @Resource
     private RedisService redisService;
 
-    @RequestMapping(value = "/{id}" ,method = RequestMethod.GET)
-    public ResponseResult getUserById(@PathVariable("id") int id){
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseResult getUserById(@PathVariable("id") int id) {
         User user = userService.getUserById(id);
         return ResponseResult.success(user);
     }
+
     @PutMapping("/nickname")
-    public void updateAvatar(@RequestBody String renickname,int id){
-        User user=userService.getUserById(id);
+    public void updateAvatar(@RequestBody String renickname, int id) {
+        User user = userService.getUserById(id);
         user.setNickname(renickname);
         userService.updateUser(user);
     }
-
 
 
     @PostMapping(value = "/sign_in")
@@ -60,6 +60,7 @@ public class UserController {
             }
         }
     }
+
     @PostMapping("/avatar")
     public String ossUpload(@RequestParam("file") MultipartFile sourceFile, @RequestParam("userId") int userId) {
         System.out.println(userId);
@@ -78,7 +79,7 @@ public class UserController {
         File tempFile = null;
         try {
             //创建临时文件
-            tempFile = File.createTempFile(prefix,prefix);
+            tempFile = File.createTempFile(prefix, prefix);
             // MultipartFile to File
             sourceFile.transferTo(tempFile);
         } catch (IOException e) {
@@ -95,6 +96,7 @@ public class UserController {
         userService.updateUser(user);
         return url.toString();
     }
+
     //获取短信验证码接口
     @PostMapping(value = "/verify")
     public ResponseResult getVerifyCode(@RequestParam("mobile") String mobile) {
@@ -109,15 +111,16 @@ public class UserController {
             return ResponseResult.success();
         }
     }
-//    验证短信码接口
+
+    //    验证短信码接口
     @PostMapping(value = "/check")
     public ResponseResult checkVerifyCode(@RequestParam("mobile") String mobile, @RequestParam("verifyCode") String verifyCode) {
         String code = null;
         try {
             code = redisService.get(mobile).toString();
 
-        }catch (NullPointerException e){
-            return ResponseResult.error(StatusConst.VERIFYCODE_FAILURE,MsgConst.VERIFYCODE_FAILURE);
+        } catch (NullPointerException e) {
+            return ResponseResult.error(StatusConst.VERIFYCODE_FAILURE, MsgConst.VERIFYCODE_FAILURE);
 
         }
         System.out.println(code + "---");
@@ -129,7 +132,7 @@ public class UserController {
         }
     }
 
-//    注册接口
+    //    注册接口
     @PostMapping(value = "/sign_up")
     public ResponseResult signUp(@RequestBody UserDTO userDTO) {
         userService.signUp(userDTO);

@@ -35,6 +35,6 @@ public class FollowServiceImplTest {
 
     @Test
     public void deleteFollow() {
-        followService.deleteFollow(1,6 );
+        followService.deleteFollow(1, 6);
     }
 }

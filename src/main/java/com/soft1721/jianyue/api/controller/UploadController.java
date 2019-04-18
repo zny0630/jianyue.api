@@ -1,9 +1,6 @@
 package com.soft1721.jianyue.api.controller;
 
-
 import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.model.PutObjectResult;
-import com.soft1721.jianyue.api.util.ResponseResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,32 +13,30 @@ import java.net.URL;
 import java.util.Date;
 import java.util.UUID;
 
-
-/**
- * Created by 张楠燕 on 2019/4/3.
- */
 @RestController
 @RequestMapping(value = "/api")
 public class UploadController {
-    @PostMapping("/avatar/upload")
+    @PostMapping("/upload")
     public String ossUpload(@RequestParam("file") MultipartFile sourceFile) {
         String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
         String accessKeyId = "LTAIJBg51XqVyXyf";
         String accessKeySecret = "Aph8DqqwRxthPmMff42ml6QdVoY42Q";
-        String bucketName = "niit-soft1721";
+        String bucketName = "jianyue0630";
         String filedir = "avatar/";
-        // 获取文件名
+        // 获取源文件名
         String fileName = sourceFile.getOriginalFilename();
-        // 获取文件后缀
+        // 获取源文件名后缀
         String suffix = fileName.substring(fileName.lastIndexOf("."));
         //uuid生成主文件名
         String prefix = UUID.randomUUID().toString();
+        //新文件名
         String newFileName = prefix + suffix;
+        //File类型的临时文件
         File tempFile = null;
         try {
-            //创建临时文件
+            //创建临时文件，用uuid主文件名+原后缀名
             tempFile = File.createTempFile(prefix, prefix);
-            // MultipartFile to File
+            // MultipartFile转成File
             sourceFile.transferTo(tempFile);
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,6 +47,7 @@ public class UploadController {
         // 生成URL
         URL url = ossClient.generatePresignedUrl(bucketName, filedir + newFileName, expiration);
         ossClient.shutdown();
+        //URL返回给客户端
         return url.toString();
     }
 }

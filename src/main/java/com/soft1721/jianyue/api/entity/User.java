@@ -16,6 +16,6 @@ public class User {
     private String token;
     private Date regtime;
     private Short status;
-    private  String avatar;
+    private String avatar;
 
 }

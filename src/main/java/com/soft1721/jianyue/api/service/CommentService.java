@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface CommentService {
     List<CommentVO> selectCommentsByAId(int aId);
+
     void addComment(Comment comment);
 }

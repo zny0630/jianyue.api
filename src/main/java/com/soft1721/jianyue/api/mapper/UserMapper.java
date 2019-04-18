@@ -10,8 +10,8 @@ public interface UserMapper {
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "mobile", column = "mobile"),
-            @Result(property = "password",column = "password"),
-            @Result(property = "nickname",column = "nickname"),
+            @Result(property = "password", column = "password"),
+            @Result(property = "nickname", column = "nickname"),
             @Result(property = "avatar", column = "avatar"),
             @Result(property = "status", column = "status"),
             @Result(property = "regtime", column = "regtime"),

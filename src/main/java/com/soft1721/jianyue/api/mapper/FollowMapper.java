@@ -2,7 +2,10 @@ package com.soft1721.jianyue.api.mapper;
 
 import com.soft1721.jianyue.api.entity.Follow;
 import com.soft1721.jianyue.api.entity.vo.FollowVO;
+import com.soft1721.jianyue.api.util.ResponseResult;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -28,4 +31,15 @@ public interface FollowMapper {
 
     @Delete("DELETE  FROM t_follow WHERE from_uid = #{fromUId} AND to_uid = #{toUId} ")
     void deleteFollow(@Param("fromUId") int fromUId, @Param("toUId") int toUId);
+
+    @Results({
+            @Result(property = "toUId", column = "to_uid"),
+            @Result(property = "fromUId", column = "from_uid"),
+            @Result(property = "nickname", column = "nickname"),
+            @Result(property = "avatar", column = "avatar")
+    })
+    @Select("SELECT a.from_uid,b.nickname,b.avatar FROM t_follow a LEFT JOIN t_user b ON a.from_uid = b.id WHERE a.to_uid = #{toUId} ")
+    List<FollowVO> getFollowedsByUId(int toUId);
+
+
 }

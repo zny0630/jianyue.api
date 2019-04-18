@@ -33,4 +33,9 @@ public class FollowServiceImpl implements FollowService {
     public void deleteFollow(int fromUId, int toUId) {
         followMapper.deleteFollow(fromUId, toUId);
     }
+
+    @Override
+    public List<FollowVO> getFollowedsByUId(int toUId) {
+        return followMapper.getFollowedsByUId(toUId);
+    }
 }

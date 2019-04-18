@@ -13,5 +13,7 @@ public interface FollowService {
     void insertFollow(Follow follow);
 
     void deleteFollow(int fromUId, int toUId);
+
+    List<FollowVO> getFollowedsByUId(int toUId);
 }
 

@@ -22,6 +22,7 @@ import static org.junit.Assert.*;
 public class UserServiceImplTest {
     @Resource
     private UserService userService;
+
     @Test
     public void getUserByMobile() throws Exception {
         User user = userService.getUserByMobile("18362955628");
@@ -35,13 +36,15 @@ public class UserServiceImplTest {
         String base64Pass = StringUtil.getBase64Encoder("111");
         loginUser.setPassword(base64Pass);
         int status = userService.signIn(loginUser);
-        assertEquals(StatusConst.SUCCESS,status);
+        assertEquals(StatusConst.SUCCESS, status);
     }
+
     @Test
     public void getUserById() throws Exception {
         User user = userService.getUserById(1);
         System.out.println(user);
     }
+
     @Test
     public void signUp() {
         UserDTO userDTO = new UserDTO();
